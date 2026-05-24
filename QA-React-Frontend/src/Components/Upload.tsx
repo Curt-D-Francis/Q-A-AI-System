@@ -3,8 +3,20 @@ import { useState, useRef } from "react"
 function Upload() {
     const [Pdf, SetPdf] = useState<File | null>(null)
     const fileInput = useRef<HTMLInputElement>(null)
-    function handlePDFUpload(){
-        fileInput.current?.click()
+    async function handlePDFUpload(){
+        if (Pdf != null){
+        var PDF_Payload = new FormData()
+        PDF_Payload.append("Uploaded_PDF_File", Pdf)
+
+        const response = await fetch("place holder  link",{
+            method: "POST",
+            body: PDF_Payload,
+        })
+
+        if (!response.ok){
+            throw new Error(`HTTP Error. Stats: ${response.status}`)
+        }
+        }
     }
     function handleFileChange(event:React.ChangeEvent<HTMLInputElement>){
             var newPdf = (event.target as HTMLInputElement)?.files?.[0]
@@ -31,11 +43,13 @@ function Upload() {
                 ref={fileInput}
                 type="file"
                 onChange={handleFileChange}
+                
                  />
 
                 <button
                 onClick={handlePDFUpload}
                 className="pdfUploadButton">
+                    Upload 
                 </button>
             </div>
            
