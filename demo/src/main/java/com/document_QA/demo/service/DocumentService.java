@@ -33,7 +33,7 @@ public class DocumentService {
     private List<String> textChunker(String fileText) {
         int MAX_CHUNK_SIZE = 500;
         int Chunk_Overlap = 50;
-        ArrayList<String> Chunks = new ArrayList<>();
+        List<String> Chunks = new ArrayList<>();
 
         for (int start = 0; start < fileText.length(); start += (MAX_CHUNK_SIZE - Chunk_Overlap)) {
             String substring = fileText.substring(start, Math.min(start + MAX_CHUNK_SIZE, fileText.length()));
