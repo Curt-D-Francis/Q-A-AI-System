@@ -1,5 +1,6 @@
 package com.document_QA.demo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +15,8 @@ import org.apache.pdfbox.text.PDFTextStripper;
 
 @Service
 public class DocumentService {
+    @Autowired
+    private EmbeddingService embeddingService;
 
     private String fileExtract(MultipartFile File) {
         try {
@@ -49,7 +52,7 @@ public class DocumentService {
 
     public void processDocument(MultipartFile File) {
         String extractedFile = fileExtract(File);
-        textChunker(extractedFile);
-        // Other functions will go here
+        List<String> chunkedText = textChunker(extractedFile);
+        embeddingService.requestEmbedding(chunkedText);
     }
 }

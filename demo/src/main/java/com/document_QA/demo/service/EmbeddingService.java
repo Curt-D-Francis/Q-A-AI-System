@@ -30,14 +30,15 @@ public class EmbeddingService {
         requestBody.put("model", "voyage-4-lite");
         String json = mapper.writeValueAsString(requestBody);
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.voyageai.com/v1/embeddings"))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + voyageAiApiKey)
-                .POST(HttpRequest.BodyPublishers.ofString(json))
-                .build();
 
         try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.voyageai.com/v1/embeddings"))
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", "Bearer " + voyageAiApiKey)
+                    .POST(HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             VoyageAiResponse responseJson = mapper.readValue(response.body(), VoyageAiResponse.class);
             List<VoyageAiEmbedding> responseData = responseJson.getData();
@@ -47,10 +48,10 @@ public class EmbeddingService {
             }
             return responseEmbedding;
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            System.err.println("IOException Error has occured");
             e.printStackTrace();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
+            System.err.println("InterruptedException Error has occured");
             e.printStackTrace();
         }
         return null;
