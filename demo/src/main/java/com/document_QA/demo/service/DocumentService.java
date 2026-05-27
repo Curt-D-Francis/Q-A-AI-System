@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.document_QA.demo.model.DocumentChunk;
+import com.document_QA.demo.repository.DocumentChunkRepository;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,6 +20,8 @@ import org.apache.pdfbox.text.PDFTextStripper;
 public class DocumentService {
     @Autowired
     private EmbeddingService embeddingService;
+    @Autowired
+    private DocumentChunkRepository documentChunkRepository;
 
     private String fileExtract(MultipartFile File) {
         try {
@@ -53,6 +58,23 @@ public class DocumentService {
     public void processDocument(MultipartFile File) {
         String extractedFile = fileExtract(File);
         List<String> chunkedText = textChunker(extractedFile);
-        embeddingService.requestEmbedding(chunkedText);
+        List<List<Float>> embeddings = embeddingService.requestEmbedding(chunkedText);
+        List<DocumentChunk> documentChunks = new ArrayList<>();
+        for (int i = 0; i < embeddings.size(); i++) {
+            float[] embedding = new float[embeddings.get(i).size()];
+            String currText = chunkedText.get(i);
+            for (int j = 0; j < embedding.length; j++) {
+                embedding[j] = embeddings.get(i).get(j);
+            }
+            DocumentChunk chunk = new DocumentChunk();
+            chunk.setEmbedding(embedding);
+            chunk.setChunkText(currText);
+            chunk.setDocumentName(File.getOriginalFilename());
+            documentChunks.add(chunk);
+
+        }
+
+        documentChunkRepository.saveAll(documentChunks);
+
     }
 }

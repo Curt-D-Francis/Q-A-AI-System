@@ -17,9 +17,9 @@ public class QA_Controller {
     private DocumentService documentService;
 
     @PostMapping("/upload")
-    public MultipartFile uploadPDF(@RequestPart MultipartFile File) {
+    public void uploadPDF(@RequestPart("Uploaded_PDF_File") MultipartFile File) {
 
-        return File;
+        documentService.processDocument(File);
     }
 
 }
