@@ -1,8 +1,10 @@
 import { useState, useRef } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Upload() {
     const [Pdf, SetPdf] = useState<File | null>(null)
     const fileInput = useRef<HTMLInputElement>(null)
+    const navigate = useNavigate()
     async function handlePDFUpload(){
         if (Pdf != null){
             var PDF_Payload = new FormData()
@@ -16,6 +18,8 @@ function Upload() {
             if (!response.ok){
                 throw new Error(`HTTP Error. Stats: ${response.status}`)
             }
+
+            navigate('/query')
         }
     }
     function handleFileChange(event:React.ChangeEvent<HTMLInputElement>){

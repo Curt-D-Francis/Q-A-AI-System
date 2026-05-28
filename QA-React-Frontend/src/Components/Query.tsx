@@ -6,6 +6,7 @@ function Query(){
     const [Messages, SetMessage] = useState<Array<{role: string, content: string}>>([])
     const [input, SetInput] = useState<string>("")
     const [loading, SetLoading] = useState<boolean>(false)
+    
     async function sendHandler(){
         if (input !== "" && loading !== true){
             SetLoading(true)
@@ -17,7 +18,7 @@ function Query(){
                 headers:{
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(savedInput),
+                body: JSON.stringify({ question: savedInput }),
             })
 
             if (!response.ok){

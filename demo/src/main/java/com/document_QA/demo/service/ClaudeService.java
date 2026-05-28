@@ -52,6 +52,7 @@ public class ClaudeService {
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
             ClaudeAiReponse responseJson = mapper.readValue(response.body(), ClaudeAiReponse.class);
             String content = responseJson.getContent().get(0).getText();
             return content;

@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import com.document_QA.demo.model.DocumentChunk;
 
 public interface DocumentChunkRepository extends JpaRepository<DocumentChunk, UUID> {
-    @Query(value = "SELECT * FROM document_chunks ORDER BY embedding <=> :questionVector LIMIT 5", nativeQuery = true)
+    @Query(value = "SELECT * FROM document_chunks ORDER BY embedding <=> CAST(:questionVector AS vector) LIMIT 5", nativeQuery = true)
     List<DocumentChunk> findAlikeChunks(@Param("questionVector") float[] questionVector);
 
 }
