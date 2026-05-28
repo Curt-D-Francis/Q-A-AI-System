@@ -13,39 +13,49 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.document_QA.demo.model.VoyageAiResponse;
+import com.document_QA.demo.model.ClaudeAiReponse;
 
 import tools.jackson.databind.ObjectMapper;
 
 @Service
-public class EmbeddingService {
-    @Value("${voyageai.api.key}")
-    private String voyageAiApiKey;
+public class ClaudeService {
+    @Value("${claude.api.key}")
+    private String claudeApiKey;
 
-    public List<List<Float>> requestEmbedding(List<String> substringChunks) {
+    public String requestClaudeResponse(String context) {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("input", substringChunks);
-        requestBody.put("model", "voyage-4-lite");
+
+        Map<String, String> messageMap = new HashMap<>();
+        messageMap.put("content", context);
+        messageMap.put("role", "user");
+        List<Map<String, String>> messageObject = new ArrayList<>();
+
+        messageObject.add(messageMap);
+
+        requestBody.put("messages", messageObject);
+        requestBody.put("model", "claude-sonnet-4-6");
+        requestBody.put("max_tokens", 1024);
+        requestBody.put("system",
+                "Answer the user's question or comment using only the provided context. If the answer cannot be found in the context, say so.");
         String json = mapper.writeValueAsString(requestBody);
         HttpClient client = HttpClient.newHttpClient();
 
         try {
+
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.voyageai.com/v1/embeddings"))
+                    .uri(URI.create("https://api.anthropic.com/v1/messages"))
                     .header("Content-Type", "application/json")
-                    .header("Authorization", "Bearer " + voyageAiApiKey)
+                    .header("anthropic-version", "2023-06-01")
+                    .header("X-Api-Key", claudeApiKey)
                     .POST(HttpRequest.BodyPublishers.ofString(json))
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            VoyageAiResponse responseJson = mapper.readValue(response.body(), VoyageAiResponse.class);
-            List<VoyageAiResponse.VoyageAiEmbedding> responseData = responseJson.getData();
-            List<List<Float>> responseEmbedding = new ArrayList<>();
-            for (int i = 0; i < responseData.size(); i++) {
-                responseEmbedding.add(responseData.get(i).getEmbedding());
-            }
-            return responseEmbedding;
+            ClaudeAiReponse responseJson = mapper.readValue(response.body(), ClaudeAiReponse.class);
+            String content = responseJson.getContent().get(0).getText();
+            return content;
+
         } catch (IOException e) {
             System.err.println("IOException Error has occured");
             e.printStackTrace();
@@ -55,5 +65,4 @@ public class EmbeddingService {
         }
         return null;
     }
-
 }

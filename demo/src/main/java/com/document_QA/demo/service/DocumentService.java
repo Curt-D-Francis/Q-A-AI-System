@@ -51,10 +51,6 @@ public class DocumentService {
 
     }
 
-    private void saveToDB() {
-        // Supabase handling
-    }
-
     public void processDocument(MultipartFile File) {
         String extractedFile = fileExtract(File);
         List<String> chunkedText = textChunker(extractedFile);

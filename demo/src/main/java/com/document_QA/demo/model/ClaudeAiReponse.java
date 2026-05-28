@@ -8,12 +8,12 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class VoyageAiResponse {
-    private List<VoyageAiEmbedding> data;
+public class ClaudeAiReponse {
+    private List<ClaudeContent> content;
 
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class VoyageAiEmbedding {
-        private List<Float> embedding;
+    public static class ClaudeContent {
+        private String text;
     }
 }

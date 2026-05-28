@@ -5,17 +5,17 @@ function Upload() {
     const fileInput = useRef<HTMLInputElement>(null)
     async function handlePDFUpload(){
         if (Pdf != null){
-        var PDF_Payload = new FormData()
-        PDF_Payload.append("Uploaded_PDF_File", Pdf)
+            var PDF_Payload = new FormData()
+            PDF_Payload.append("Uploaded_PDF_File", Pdf)
 
-        const response = await fetch("place holder  link",{
-            method: "POST",
-            body: PDF_Payload,
-        })
+            const response = await fetch("http://localhost:8080/api/document/upload",{
+                method: "POST",
+                body: PDF_Payload,
+            })
 
-        if (!response.ok){
-            throw new Error(`HTTP Error. Stats: ${response.status}`)
-        }
+            if (!response.ok){
+                throw new Error(`HTTP Error. Stats: ${response.status}`)
+            }
         }
     }
     function handleFileChange(event:React.ChangeEvent<HTMLInputElement>){
