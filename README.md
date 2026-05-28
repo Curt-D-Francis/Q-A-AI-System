@@ -4,15 +4,6 @@ A full-stack RAG (Retrieval Augmented Generation) application that lets users up
 
 ---
 
-## What is RAG?
-
-RAG stands for Retrieval Augmented Generation. It solves the problem of AI models only knowing what they were trained on. Instead of asking Claude directly about your documents, RAG:
-
-1. **Ingests** your documents — chunks them, embeds them into vectors, and stores them in a database
-2. **Retrieves** relevant chunks at query time using vector similarity search
-3. **Augments** the prompt with those chunks so Claude answers based on your actual content
-
----
 
 ## Architecture Overview
 
