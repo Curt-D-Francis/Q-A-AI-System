@@ -6,14 +6,14 @@ function Query(){
     const [Messages, SetMessage] = useState<Array<{role: string, content: string}>>([])
     const [input, SetInput] = useState<string>("")
     const [loading, SetLoading] = useState<boolean>(false)
-    
+    const url = `${import.meta.env.VITE_API_URL}/api/document/query`
     async function sendHandler(){
         if (input !== "" && loading !== true){
             SetLoading(true)
             const savedInput = input
             SetInput("")
             
-            const response = await fetch("http://localhost:8080/api/document/query", {
+            const response = await fetch(url, {
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json"

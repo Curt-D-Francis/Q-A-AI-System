@@ -27,3 +27,5 @@ demo/src/main/resources/application.properties
 demo/src/main/resources/
 ragas-env/*
 evaluation/.env
+QA-React-Frontend/.env
+.env
