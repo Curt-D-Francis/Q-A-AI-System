@@ -39,8 +39,8 @@ public class DocumentService {
     }
 
     private List<String> textChunker(String fileText) {
-        int MAX_CHUNK_SIZE = 500;
-        int Chunk_Overlap = 50;
+        int MAX_CHUNK_SIZE = 1000;
+        int Chunk_Overlap = 150;
         List<String> Chunks = new ArrayList<>();
 
         for (int start = 0; start < fileText.length(); start += (MAX_CHUNK_SIZE - Chunk_Overlap)) {

@@ -1,0 +1,33 @@
+[
+    {
+        "question": "What is the user's GPA?",
+        "ground_truth": "3.3 out of 4.0",
+        "reference_contexts": ["GPA: 3.3/4.0"]
+    },
+
+    {
+        "question": "What university/school does the user attend?",
+        "ground_truth": "Florida International University",
+        "reference_contexts": ["Florida International University;  Miami, FL"]
+    },
+
+    {
+        "question": "What projects has the user built?",
+        "ground_truth": "They built a gesture recognition system, an AI Document Q&A System and a Django-Based Financial Data System",
+        "reference_contexts": ["Gesture Recognition System Using OpenCV and MediaPipe", "Django-Based Financial Data System", "AI Document Q&A System"]
+    },
+
+    {
+        "question": "Where has the user worked?",
+        "ground_truth": "They worked for Lean Techniques",
+        "reference_contexts": ["Software Consultant Intern — Lean Techniques June 2025 - August 2025"]
+    },
+
+
+    {
+        "question": "What skills does the user have?",
+        "ground_truth": "They have experience with Python, C, Javascript, SQL, OpenCV, Numpy, Pandas, AWS, React, Node",
+        "reference_contexts": ["Languages: Java, Python, C, C#, JavaScript , (familiar) SQL, CSS, HTML, Lua",
+                               "Tools/Skills: Tkinter, Git, Streamlit, OpenCV, NumPy, Pandas, Excel, AWS, React, Node, Docker, .NET, Spring Boot"]
+    }
+]

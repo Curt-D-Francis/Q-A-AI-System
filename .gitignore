@@ -25,3 +25,5 @@ dist-ssr
 *.sw?
 demo/src/main/resources/application.properties
 demo/src/main/resources/
+ragas-env/*
+evaluation/.env

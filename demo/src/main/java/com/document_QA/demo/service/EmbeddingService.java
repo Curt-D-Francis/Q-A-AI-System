@@ -39,8 +39,16 @@ public class EmbeddingService {
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
+            System.out.println(response.statusCode());
             VoyageAiResponse responseJson = mapper.readValue(response.body(), VoyageAiResponse.class);
+
             List<VoyageAiResponse.VoyageAiEmbedding> responseData = responseJson.getData();
+            if (responseData == null) {
+                System.err.println("Voyage AI returned null data: " + response.body());
+                return new ArrayList<>();
+            }
+
             List<List<Float>> responseEmbedding = new ArrayList<>();
             for (int i = 0; i < responseData.size(); i++) {
                 responseEmbedding.add(responseData.get(i).getEmbedding());
